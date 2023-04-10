@@ -10,6 +10,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.jess.arms.utils.StatusBarUtil;
 
 import butterknife.BindView;
 import me.hxbmvp.wanandroid.demo.di.component.DaggerSplashComponent;
@@ -73,6 +74,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        StatusBarUtil.immersive(this,R.color.colorPrimary,0.5f);
         initEventAndData();
     }
 
