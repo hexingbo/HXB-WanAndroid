@@ -7,6 +7,8 @@ package me.hxbmvp.wanandroid.demo.app;
  */
 public class Constants {
 
+    public static final String HOST = "https://www.wanandroid.com";
+
     /**
      * Tag fragment classify
      */

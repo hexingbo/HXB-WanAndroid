@@ -3,5 +3,5 @@
 
     //behavior
     <string name="scale_down_show_behavior">me.hxbmvp.wanandroid.demo.mvp.ui.widget.behavior.ScaleDownShowBehavior</string>
-
+    <string name="share_view">shareView</string>
 </resources>

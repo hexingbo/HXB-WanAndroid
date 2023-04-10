@@ -57,7 +57,9 @@ public class UserModel extends BaseModel implements UserContract.Model {
         return Observable.just(mRepositoryManager
                 .obtainRetrofitService(UserService.class)
                 .getUsers(lastIdQueried, USERS_PER_PAGE))
-                .flatMap((Function<Observable<List<User>>, ObservableSource<List<User>>>) listObservable -> mRepositoryManager.obtainCacheService(CommonCache.class)
+                .flatMap((Function<Observable<List<User>>,
+                        ObservableSource<List<User>>>) listObservable ->
+                        mRepositoryManager.obtainCacheService(CommonCache.class)
                         .getUsers(listObservable
                                 , new DynamicKey(lastIdQueried)
                                 , new EvictDynamicKey(update))

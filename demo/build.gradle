@@ -105,4 +105,5 @@ dependencies {
     implementation rootProject.ext.dependencies["lottie"]
     implementation rootProject.ext.dependencies["material"]
     implementation rootProject.ext.dependencies["byeburger"]
+    implementation 'org.yczbj:YCRefreshViewLib:2.5.8'
 }

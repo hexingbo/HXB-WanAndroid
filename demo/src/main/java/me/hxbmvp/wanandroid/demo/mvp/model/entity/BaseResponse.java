@@ -28,19 +28,19 @@ import me.hxbmvp.wanandroid.demo.mvp.model.api.Api;
  */
 public class BaseResponse<T> implements Serializable {
     private T data;
-    private String code;
-    private String msg;
+    private String errorCode;
+    private String errorMsg;
 
     public T getData() {
         return data;
     }
 
     public String getCode() {
-        return code;
+        return errorCode;
     }
 
     public String getMsg() {
-        return msg;
+        return errorMsg;
     }
 
     /**
@@ -49,6 +49,6 @@ public class BaseResponse<T> implements Serializable {
      * @return
      */
     public boolean isSuccess() {
-        return code.equals(Api.REQUEST_SUCCESS);
+        return errorCode.equals(Api.REQUEST_SUCCESS);
     }
 }

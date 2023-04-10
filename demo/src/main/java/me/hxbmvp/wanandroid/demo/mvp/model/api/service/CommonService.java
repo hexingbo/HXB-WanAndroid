@@ -15,6 +15,12 @@
  */
 package me.hxbmvp.wanandroid.demo.mvp.model.api.service;
 
+import io.reactivex.Observable;
+import me.hxbmvp.wanandroid.demo.mvp.model.entity.BaseResponse;
+import me.hxbmvp.wanandroid.demo.mvp.model.entity.FeedArticleListData;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+
 /**
  * @作者： HeXingBo
  * @时间： 2023/4/10
@@ -22,4 +28,6 @@ package me.hxbmvp.wanandroid.demo.mvp.model.api.service;
  */
 public interface CommonService {
 
+    @GET("/article/list/{page}/json")
+    Observable<BaseResponse<FeedArticleListData>> getMainPager(@Path("page") int page);
 }

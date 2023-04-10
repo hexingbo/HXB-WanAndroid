@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.hxbmvp.wanandroid.demo.R;
 import me.hxbmvp.wanandroid.demo.app.Constants;
 import me.hxbmvp.wanandroid.demo.di.component.DaggerMainComponent;
@@ -56,6 +59,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     DrawerLayout mDrawerLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.toolbar_back)
+    View mToolbarBack;
+    @BindView(R.id.toolbar_back_img)
+    ImageView mToolbarBackImg;
     @BindView(R.id.toolbar_title)
     TextView mTitleTv;
     @BindView(R.id.main_floating_action_btn)
@@ -95,6 +102,18 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         initFragments();
         initBottomNavigationView();
         switchFragment(0);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        mToolbarBackImg.setImageResource(R.drawable.too);
+        mToolbarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
     }
 
     @Override
@@ -242,7 +261,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void startMainPagerFragment() {
-        mTitleTv.setText("首页");
+        mTitleTv.setText(R.string.home_pager);
         mBottomNavigationView.setVisibility(View.VISIBLE);
         mBottomNavigationView.setSelectedItemId(R.id.tab_main_pager);
         mDrawerLayout.closeDrawers();
@@ -250,15 +269,27 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void startCollectFragment() {
-        mTitleTv.setText("收藏");
+        mTitleTv.setText(R.string.my_collect);
         switchFragment(Constants.TYPE_COLLECT);
         mDrawerLayout.closeDrawers();
     }
 
     @Override
     public void startSettingFragment() {
-        mTitleTv.setText("设置");
+        mTitleTv.setText(R.string.setting);
         switchFragment(Constants.TYPE_SETTING);
         mDrawerLayout.closeDrawers();
     }
+
+    @OnClick({R.id.main_floating_action_btn})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.main_floating_action_btn:
+//                jumpToTheTop();
+                break;
+            default:
+                break;
+        }
+    }
+
 }
