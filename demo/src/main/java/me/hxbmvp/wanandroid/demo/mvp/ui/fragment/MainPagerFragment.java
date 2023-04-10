@@ -2,6 +2,7 @@ package me.hxbmvp.wanandroid.demo.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.jess.arms.utils.ArmsUtils;
 
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import org.yczbj.ycrefreshviewlib.inter.OnErrorListener;
+import org.yczbj.ycrefreshviewlib.inter.OnLoadMoreListener;
 import org.yczbj.ycrefreshviewlib.inter.OnMoreListener;
 import org.yczbj.ycrefreshviewlib.inter.OnNoMoreListener;
 import org.yczbj.ycrefreshviewlib.view.YCRefreshView;
@@ -81,12 +83,7 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
 
     @Override
     public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
+        mRefreshView.showProgress();
     }
 
     @Override
@@ -114,7 +111,7 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
     @Override
     public void initRefreshView() {
         mRefreshView.setLayoutManager(mLayoutManager);
-        mRefreshView.setAdapter(mAdapter);
+        mRefreshView.setAdapterWithProgress(mAdapter);
         //设置刷新listener
         mRefreshView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -127,29 +124,13 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
         mRefreshView.setRefreshing(false);
         //设置刷新颜色
         mRefreshView.setRefreshingColorResources(R.color.colorAccent);
-        mAdapter.setMore(R.layout.view_more, new OnMoreListener() {
-            @Override
-            public void onMoreShow() {
 
-            }
-
+        mAdapter.setMore(R.layout.view_more, new OnLoadMoreListener() {
             @Override
-            public void onMoreClick() {
+            public void onLoadMore() {
                 mPresenter.getMainPagers(false);
             }
         });
-        mAdapter.setError(R.layout.view_error, new OnErrorListener() {
-            @Override
-            public void onErrorShow() {
-                mAdapter.resumeMore();
-            }
-
-            @Override
-            public void onErrorClick() {
-                mAdapter.resumeMore();
-            }
-        });
-
         mAdapter.setNoMore(R.layout.view_empty, new OnNoMoreListener() {
             @Override
             public void onNoMoreShow() {
@@ -158,19 +139,34 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
 
             @Override
             public void onNoMoreClick() {
-
+                Log.e("逗比","没有更多数据了");
             }
         });
+        mAdapter.setError(R.layout.view_error, new OnErrorListener() {
+            @Override
+            public void onErrorShow() {
+                mAdapter.pauseMore();
+            }
 
+            @Override
+            public void onErrorClick() {
+                mAdapter.resumeMore();
+            }
+        });
     }
 
     @Override
-    public void startLoadMore() {
-
+    public void showRecycler() {
+        mRefreshView.showRecycler();
     }
 
     @Override
-    public void endLoadMore() {
+    public void showEmpty() {
+        mRefreshView.showEmpty();
+    }
 
+    @Override
+    public void showError() {
+        mRefreshView.showError();
     }
 }

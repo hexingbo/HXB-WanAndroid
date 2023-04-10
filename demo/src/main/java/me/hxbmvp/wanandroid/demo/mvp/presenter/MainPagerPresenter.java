@@ -49,8 +49,6 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
     RecyclerArrayAdapter mAdapter;
 
     private int page = 0;
-    private boolean hasNetWork = true;
-
 
     @Inject
     public MainPagerPresenter(MainPagerContract.Model model, MainPagerContract.View rootView) {
@@ -67,23 +65,17 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
     }
 
     public void getMainPagers(boolean pullToRefresh) {
-        mModel.getMainPagers(page)
+        mModel.getMainPagers(page = pullToRefresh ? 0 : page)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe(disposable -> {
-                    if (pullToRefresh) {
-                        mRootView.showLoading();//显示下拉刷新的进度条
-                    } else {
-                        mRootView.startLoadMore();//显示上拉加载更多的进度条
+                    mRootView.showLoading();
+                    if (pullToRefresh){
+                        mAdapter.resumeMore();
                     }
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
-                    if (pullToRefresh) {
-                        mRootView.hideLoading();//隐藏下拉刷新的进度条
-                    } else {
-                        mRootView.endLoadMore();//隐藏上拉加载更多的进度条
-                    }
                 })
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new GlobalBaseObserver<FeedArticleListData>(mErrorHandler) {
@@ -94,20 +86,30 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
                             List<FeedArticleData> datas = result.getDatas();
                             if (datas != null && datas.size() > 0) {
                                 if (pullToRefresh) {
-                                    mFeedArticleDatas.clear();
                                     mAdapter.clear();
                                 }
-                                mFeedArticleDatas.addAll(datas);
                                 mAdapter.addAll(datas);
                                 page++;
+                                if (page > result.getPageCount()) {
+                                    if (!pullToRefresh) {
+                                        mAdapter.pauseMore();
+                                    }
+                                    mRootView.showRecycler();
+                                }
                             }
+                        }
+
+                        if (mAdapter.getAllData().size() == 0) {
+                            mRootView.showEmpty();
                         }
                     }
 
                     @Override
                     public void onError(Throwable t) {
                         super.onError(t);
-
+                        if (pullToRefresh) {
+                            mRootView.showError();
+                        }
                     }
                 });
     }
