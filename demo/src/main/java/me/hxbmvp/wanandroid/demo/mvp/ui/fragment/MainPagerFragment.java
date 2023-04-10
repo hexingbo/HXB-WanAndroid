@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jess.arms.base.BaseLazyLoadFragment;
 import com.jess.arms.di.component.AppComponent;
@@ -16,7 +17,6 @@ import com.jess.arms.utils.ArmsUtils;
 
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import org.yczbj.ycrefreshviewlib.inter.OnErrorListener;
-import org.yczbj.ycrefreshviewlib.inter.OnLoadMoreListener;
 import org.yczbj.ycrefreshviewlib.inter.OnMoreListener;
 import org.yczbj.ycrefreshviewlib.inter.OnNoMoreListener;
 import org.yczbj.ycrefreshviewlib.view.YCRefreshView;
@@ -115,6 +115,18 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
     public void initRefreshView() {
         mRefreshView.setLayoutManager(mLayoutManager);
         mRefreshView.setAdapter(mAdapter);
+        //设置刷新listener
+        mRefreshView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //刷新操作
+                mPresenter.getMainPagers(true);
+            }
+        });
+        //设置是否刷新
+        mRefreshView.setRefreshing(false);
+        //设置刷新颜色
+        mRefreshView.setRefreshingColorResources(R.color.colorAccent);
         mAdapter.setMore(R.layout.view_more, new OnMoreListener() {
             @Override
             public void onMoreShow() {
