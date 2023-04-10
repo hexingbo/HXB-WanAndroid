@@ -10,7 +10,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-import com.jess.arms.utils.StatusBarUtil;
+import me.hxbmvp.wanandroid.demo.app.utils.StatusBarUtil;
 
 import butterknife.BindView;
 import me.hxbmvp.wanandroid.demo.di.component.DaggerSplashComponent;

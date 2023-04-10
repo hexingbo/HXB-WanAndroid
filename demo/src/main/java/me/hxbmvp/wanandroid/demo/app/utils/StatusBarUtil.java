@@ -1,4 +1,4 @@
-package com.jess.arms.utils;
+package me.hxbmvp.wanandroid.demo.app.utils;
 
 import android.app.Activity;
 import android.content.Context;
