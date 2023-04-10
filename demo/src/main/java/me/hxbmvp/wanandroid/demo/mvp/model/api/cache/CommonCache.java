@@ -27,13 +27,9 @@ import io.rx_cache2.internal.RxCache;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.User;
 
 /**
- * ================================================
- * 展示 {@link RxCache#using(Class)} 中需要传入的 Providers 的使用方式
- * <p>
- * Created by JessYan on 08/30/2016 13:53
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
+ * @作者： HeXingBo
+ * @时间： 2023/4/10
+ * @描述： 展示 {@link RxCache#using(Class)} 中需要传入的 Providers 的使用方式
  */
 public interface CommonCache {
 

@@ -3,8 +3,6 @@ package me.hxbmvp.wanandroid.demo.mvp.contract;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 
-
-
  /**
  * @作者：hexingbo
  * @时间：04/10/2023 11:08

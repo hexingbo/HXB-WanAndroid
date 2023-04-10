@@ -16,13 +16,9 @@
 package me.hxbmvp.wanandroid.demo.mvp.model.api.service;
 
 /**
- * ================================================
- * 存放通用的一些 API
- * <p>
- * Created by JessYan on 08/05/2016 12:05
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
+ * @作者： HeXingBo
+ * @时间： 2023/4/10
+ * @描述： 存放通用的一些 API
  */
 public interface CommonService {
 

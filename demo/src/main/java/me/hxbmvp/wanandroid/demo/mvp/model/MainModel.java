@@ -12,7 +12,6 @@ import javax.inject.Inject;
 
 import me.hxbmvp.wanandroid.demo.mvp.contract.MainContract;
 
-
 /**
  * @作者：hexingbo
  * @时间：04/10/2023 11:33

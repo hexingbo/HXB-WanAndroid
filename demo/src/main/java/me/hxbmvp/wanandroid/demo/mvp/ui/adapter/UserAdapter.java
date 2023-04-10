@@ -29,13 +29,9 @@ import me.hxbmvp.wanandroid.demo.mvp.model.entity.User;
 import me.hxbmvp.wanandroid.demo.mvp.ui.holder.UserItemHolder;
 
 /**
- * ================================================
- * 展示 {@link DefaultAdapter} 的用法
- * <p>
- * Created by JessYan on 09/04/2016 12:57
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
+ * @作者： HeXingBo
+ * @时间： 2023/4/10
+ * @描述： 展示 {@link DefaultAdapter} 的用法
  */
 public class UserAdapter extends DefaultAdapter<User> {
 

@@ -16,13 +16,9 @@
 package me.hxbmvp.wanandroid.demo.mvp.model.api;
 
 /**
- * ================================================
- * 存放一些与 API 有关的东西,如请求地址,请求码等
- * <p>
- * Created by JessYan on 08/05/2016 11:25
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
+ * @作者： HeXingBo
+ * @时间： 2023/4/10
+ * @描述： 存放一些与 API 有关的东西,如请求地址,请求码等
  */
 public interface Api {
     String APP_DOMAIN = "https://api.github.com";

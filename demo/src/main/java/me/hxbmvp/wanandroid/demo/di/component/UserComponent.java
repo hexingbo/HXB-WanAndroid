@@ -25,14 +25,9 @@ import me.hxbmvp.wanandroid.demo.mvp.ui.activity.UserActivity;
 import me.hxbmvp.wanandroid.demo.di.module.UserModule;
 
 /**
- * ================================================
- * 展示 Component 的用法
- *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.6">Component wiki 官方文档</a>
- * Created by JessYan on 09/04/2016 11:17
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
+ * @作者： HeXingBo
+ * @时间： 2023/4/10 
+ * @描述： 展示 Component 的用法
  */
 @ActivityScope
 @Component(modules = UserModule.class, dependencies = AppComponent.class)

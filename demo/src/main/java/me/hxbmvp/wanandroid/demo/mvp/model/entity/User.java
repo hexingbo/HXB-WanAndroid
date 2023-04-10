@@ -18,13 +18,9 @@ package me.hxbmvp.wanandroid.demo.mvp.model.entity;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ================================================
- * User 实体类
- * <p>
- * Created by JessYan on 04/09/2016 17:14
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
+ * @作者： HeXingBo
+ * @时间： 2023/4/10
+ * @描述： 实体类
  */
 public class User {
     private final int id;

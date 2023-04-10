@@ -19,12 +19,10 @@ import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 /**
- * 状态栏透明
- *
- * @author SCWANG
- * @date 2016/10/26
+ * @作者： HeXingBo
+ * @时间： 2023/4/10
+ * @描述： 状态栏透明
  */
-
 @SuppressWarnings("unused")
 public class StatusBarUtil {
 

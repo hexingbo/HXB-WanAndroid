@@ -34,13 +34,9 @@ import me.hxbmvp.wanandroid.demo.R;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.User;
 
 /**
- * ================================================
- * 展示 {@link BaseHolder} 的用法
- * <p>
- * Created by JessYan on 9/4/16 12:56
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
+ * @作者： HeXingBo
+ * @时间： 2023/4/10
+ * @描述： 展示 {@link BaseHolder} 的用法
  */
 public class UserItemHolder extends BaseHolder<User> {
 

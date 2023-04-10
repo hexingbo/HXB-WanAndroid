@@ -38,14 +38,9 @@ import me.hxbmvp.wanandroid.demo.mvp.model.entity.User;
 import timber.log.Timber;
 
 /**
- * ================================================
- * 展示 Model 的用法
- *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.3">Model wiki 官方文档</a>
- * Created by JessYan on 09/04/2016 10:56
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
+ * @作者： HeXingBo
+ * @时间： 2023/4/10
+ * @描述： 展示 Model 的用法
  */
 @ActivityScope
 public class UserModel extends BaseModel implements UserContract.Model {
