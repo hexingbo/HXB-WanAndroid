@@ -103,4 +103,6 @@ dependencies {
     //后续添加
     implementation rootProject.ext.dependencies["constraint-layout"]
     implementation rootProject.ext.dependencies["lottie"]
+    implementation rootProject.ext.dependencies["material"]
+    implementation rootProject.ext.dependencies["byeburger"]
 }

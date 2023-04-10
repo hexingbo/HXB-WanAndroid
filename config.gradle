@@ -118,8 +118,9 @@ ext {
             "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1",
 
             //后续添加
-            "constraint-layout"        : "com.android.support.constraint:constraint-layout:1.0.2",
+            "constraint-layout"        : "com.android.support.constraint:constraint-layout:2.0.1",
             "lottie"                   : "com.airbnb.android:lottie:6.0.0",
-
+            "material"                 : "com.google.android.material:material:1.2.0",
+            "byeburger"                : "com.github.githubwing:ByeBurger:1.1.0",
     ]
 }
