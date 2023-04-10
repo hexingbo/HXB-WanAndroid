@@ -83,7 +83,6 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
 
     @Override
     public void showLoading() {
-        mRefreshView.showProgress();
     }
 
     @Override
@@ -124,14 +123,20 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
         mRefreshView.setRefreshing(false);
         //设置刷新颜色
         mRefreshView.setRefreshingColorResources(R.color.colorAccent);
-
+        mRefreshView.getErrorView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRefreshView.showProgress();
+                mPresenter.getMainPagers(true);
+            }
+        });
         mAdapter.setMore(R.layout.view_more, new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 mPresenter.getMainPagers(false);
             }
         });
-        mAdapter.setNoMore(R.layout.view_empty, new OnNoMoreListener() {
+        mAdapter.setNoMore(R.layout.view_custom_empty_data, new OnNoMoreListener() {
             @Override
             public void onNoMoreShow() {
                 mAdapter.pauseMore();

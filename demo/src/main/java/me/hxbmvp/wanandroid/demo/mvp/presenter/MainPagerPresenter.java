@@ -69,25 +69,23 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe(disposable -> {
-                    mRootView.showLoading();
-                    if (pullToRefresh){
-                        mAdapter.resumeMore();
-                    }
+
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
+
                 })
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new GlobalBaseObserver<FeedArticleListData>(mErrorHandler) {
 
                     @Override
                     public void onResult(FeedArticleListData result) {
+                        if (pullToRefresh) {
+                            mAdapter.clear();
+                        }
                         if (result != null) {
                             List<FeedArticleData> datas = result.getDatas();
                             if (datas != null && datas.size() > 0) {
-                                if (pullToRefresh) {
-                                    mAdapter.clear();
-                                }
                                 mAdapter.addAll(datas);
                                 page++;
                                 if (page > result.getPageCount()) {
@@ -106,10 +104,12 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
 
                     @Override
                     public void onError(Throwable t) {
-                        super.onError(t);
                         if (pullToRefresh) {
                             mRootView.showError();
+                        }else {
+                            mAdapter.pauseMore();
                         }
+                        super.onError(t);
                     }
                 });
     }
