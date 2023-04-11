@@ -31,8 +31,8 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/main_floating_action_btn"
             style="@style/style_float_btn"
-            android:layout_marginBottom="@dimen/dp_60"
             android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_60"
             android:src="@mipmap/icon_up_arrow"
             app:layout_behavior="@string/scale_down_show_behavior" />
 
@@ -45,6 +45,7 @@
             app:elevation="@dimen/dp_16"
             app:itemIconTint="@drawable/nav_item_color_state"
             app:itemTextColor="@drawable/nav_item_color_state"
+            app:labelVisibilityMode="labeled"
             app:layout_behavior="@string/bye_burger_bottom_behavior"
             app:menu="@menu/bottom_navigation_main" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
