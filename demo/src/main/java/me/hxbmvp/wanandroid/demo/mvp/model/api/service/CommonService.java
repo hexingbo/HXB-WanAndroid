@@ -15,7 +15,10 @@
  */
 package me.hxbmvp.wanandroid.demo.mvp.model.api.service;
 
+import java.util.List;
+
 import io.reactivex.Observable;
+import me.hxbmvp.wanandroid.demo.mvp.model.entity.BannerData;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.BaseResponse;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.FeedArticleListData;
 import retrofit2.http.GET;
@@ -28,6 +31,21 @@ import retrofit2.http.Path;
  */
 public interface CommonService {
 
+    /**
+     * 获取feed文章列表
+     * @param page
+     * @return
+     */
     @GET("/article/list/{page}/json")
-    Observable<BaseResponse<FeedArticleListData>> getMainPager(@Path("page") int page);
+    Observable<BaseResponse<FeedArticleListData>> getFeedArticleList(@Path("page") int page);
+
+    /**
+     * 广告栏
+     * http://www.wanandroid.com/banner/json
+     *
+     * @return 广告栏数据
+     */
+    @GET("banner/json")
+    Observable<BaseResponse<List<BannerData>>> getBannerData();
+
 }

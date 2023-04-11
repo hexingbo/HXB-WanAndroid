@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
@@ -28,5 +27,3 @@ dependencies {
     }
     compileOnly project(':arms')
 }
-
-apply from: '../bintray.gradle'

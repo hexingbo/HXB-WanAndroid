@@ -110,5 +110,3 @@ dependencies {
     //test
     api rootProject.ext.dependencies["timber"]
 }
-
-apply from: '../bintray.gradle'

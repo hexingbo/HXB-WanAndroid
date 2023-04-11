@@ -8,12 +8,14 @@ import com.jess.arms.mvp.BaseModel;
 
 import com.jess.arms.di.scope.FragmentScope;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import me.hxbmvp.wanandroid.demo.mvp.contract.MainPagerContract;
 import me.hxbmvp.wanandroid.demo.mvp.model.api.service.CommonService;
-import me.hxbmvp.wanandroid.demo.mvp.model.api.service.UserService;
+import me.hxbmvp.wanandroid.demo.mvp.model.entity.BannerData;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.BaseResponse;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.FeedArticleListData;
 
@@ -43,7 +45,12 @@ public class MainPagerModel extends BaseModel implements MainPagerContract.Model
     }
 
     @Override
-    public Observable<BaseResponse<FeedArticleListData>> getMainPagers(int page) {
-        return mRepositoryManager.obtainRetrofitService(CommonService.class).getMainPager(page);
+    public Observable<BaseResponse<FeedArticleListData>> getFeedArticleList(int page) {
+        return mRepositoryManager.obtainRetrofitService(CommonService.class).getFeedArticleList(page);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<BannerData>>> getBannerData() {
+        return mRepositoryManager.obtainRetrofitService(CommonService.class).getBannerData();
     }
 }

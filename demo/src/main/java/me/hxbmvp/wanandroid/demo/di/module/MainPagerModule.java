@@ -15,6 +15,7 @@ import dagger.Module;
 import dagger.Provides;
 import me.hxbmvp.wanandroid.demo.mvp.contract.MainPagerContract;
 import me.hxbmvp.wanandroid.demo.mvp.model.MainPagerModel;
+import me.hxbmvp.wanandroid.demo.mvp.model.entity.BannerData;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.FeedArticleData;
 import me.hxbmvp.wanandroid.demo.mvp.ui.adapter.FeedArticleAdapter;
 
@@ -39,6 +40,12 @@ public abstract class MainPagerModule {
     @FragmentScope
     @Provides
     static List<FeedArticleData> mFeedArticleDatas() {
+        return new ArrayList<>();
+    }
+
+    @FragmentScope
+    @Provides
+    static List<BannerData> mBannerDatas() {
         return new ArrayList<>();
     }
 

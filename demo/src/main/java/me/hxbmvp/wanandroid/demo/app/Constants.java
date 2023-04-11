@@ -26,4 +26,13 @@ public class Constants {
 
     public static final int TYPE_SETTING = 6;
 
+    /**
+     * Main Pager
+     */
+    public static final String LOGIN_DATA = "login_data";
+
+    public static final String BANNER_DATA = "banner_data";
+
+    public static final String ARTICLE_DATA = "article_data";
+
 }

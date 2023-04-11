@@ -7,7 +7,7 @@ import java.util.List;
  * @date 2018/2/12
  */
 
-public class FeedArticleListData {
+public class FeedArticleListData extends BaseData {
 
     private int curPage;
     private List<FeedArticleData> datas;

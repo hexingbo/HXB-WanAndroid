@@ -106,4 +106,6 @@ dependencies {
     implementation rootProject.ext.dependencies["material"]
     implementation rootProject.ext.dependencies["byeburger"]
     implementation 'org.yczbj:YCRefreshViewLib:2.5.8'
+//    implementation project(path: ':YCBannerLib')
+    implementation 'cn.yc:YCBannerLib:1.4.0'
 }

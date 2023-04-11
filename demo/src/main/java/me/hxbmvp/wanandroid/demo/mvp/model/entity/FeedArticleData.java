@@ -1,13 +1,11 @@
 package me.hxbmvp.wanandroid.demo.mvp.model.entity;
 
-import java.io.Serializable;
-
 /**
  * @author quchao
  * @date 2018/2/12
  */
 
-public class FeedArticleData implements Serializable {
+public class FeedArticleData extends BaseData {
 
     private String apkLink;
     private String author;

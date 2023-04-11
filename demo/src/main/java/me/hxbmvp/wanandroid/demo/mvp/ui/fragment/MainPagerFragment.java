@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,14 +17,19 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jess.arms.base.BaseLazyLoadFragment;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
+import com.yc.cn.ycbannerlib.banner.BannerView;
+import com.yc.cn.ycbannerlib.banner.adapter.AbsStaticPagerAdapter;
 
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
+import org.yczbj.ycrefreshviewlib.inter.InterItemView;
 import org.yczbj.ycrefreshviewlib.inter.OnErrorListener;
 import org.yczbj.ycrefreshviewlib.inter.OnLoadMoreListener;
-import org.yczbj.ycrefreshviewlib.inter.OnMoreListener;
 import org.yczbj.ycrefreshviewlib.inter.OnNoMoreListener;
 import org.yczbj.ycrefreshviewlib.view.YCRefreshView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,6 +37,7 @@ import butterknife.BindView;
 import me.hxbmvp.wanandroid.demo.R;
 import me.hxbmvp.wanandroid.demo.di.component.DaggerMainPagerComponent;
 import me.hxbmvp.wanandroid.demo.mvp.contract.MainPagerContract;
+import me.hxbmvp.wanandroid.demo.mvp.model.entity.BannerData;
 import me.hxbmvp.wanandroid.demo.mvp.presenter.MainPagerPresenter;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
@@ -45,9 +54,14 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
     RecyclerView.LayoutManager mLayoutManager;
     @Inject
     RecyclerArrayAdapter mAdapter;
+    @Inject
+    List<BannerData> mBannerDatas;
 
     @BindView(R.id.recyclerView)
     YCRefreshView mRefreshView;
+
+    private BannerView banner;
+    private AppComponent mAppComponent;
 
     public static MainPagerFragment newInstance() {
         MainPagerFragment fragment = new MainPagerFragment();
@@ -71,8 +85,10 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        mAppComponent = ArmsUtils.obtainAppComponentFromContext(getContext());
+        initBanner();
         initRefreshView();
-        mPresenter.getMainPagers(true);
+        mPresenter.loadRefreshData();
 
     }
 
@@ -104,7 +120,93 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
 
     @Override
     protected void lazyLoadData() {
-        mPresenter.getMainPagers(true);
+        mPresenter.loadRefreshData();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (banner != null) {
+            //停止轮播
+            banner.pause();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (banner != null) {
+            //开始轮播
+            banner.resume();
+        }
+    }
+
+    @Override
+    public View initBanner() {
+        LinearLayout mHeaderGroup = ((LinearLayout) LayoutInflater.from(getActivity()).inflate( R.layout.view_home_banner, null));
+        banner = (BannerView) mHeaderGroup.findViewById(R.id.banner);
+        //设置轮播时间
+        banner.setPlayDelay(2000);
+        //设置轮播图适配器，必须
+        banner.setAdapter(new AbsStaticPagerAdapter() {
+            @Override
+            public View getView(ViewGroup container, int position) {
+                ImageView view = new ImageView(container.getContext());
+                view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT));
+                mAppComponent.imageLoader().loadImage(getContext(),
+                        ImageConfigImpl
+                                .builder()
+                                .url(mBannerDatas.get(position).getImagePath())
+                                .imageView(view)
+                                .build());
+                return view;
+            }
+
+            @Override
+            public int getCount() {
+                return mBannerDatas.size();
+            }
+        });
+        //设置位置
+        banner.setHintGravity(1);
+        //设置指示器样式
+        banner.setHintMode(BannerView.HintMode.TEXT_HINT);
+        //判断轮播是否进行
+        boolean playing = banner.isPlaying();
+        //轮播图点击事件
+        banner.setOnBannerClickListener(new BannerView.OnBannerClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(getContext(), position + "被点击呢", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //轮播图滑动事件
+        banner.setOnPageListener(new BannerView.OnPageListener() {
+            @Override
+            public void onPageChange(int position) {
+
+            }
+        });
+        banner.resume();
+        return mHeaderGroup;
+    }
+
+    @Override
+    public void addHeadView() {
+        mAdapter.removeAllHeader();
+        InterItemView interItemView = new InterItemView() {
+            @Override
+            public View onCreateView(ViewGroup parent) {
+                return initBanner();
+            }
+
+            @Override
+            public void onBindView(View headerView) {
+            }
+        };
+        mAdapter.addHeader(interItemView);
     }
 
     @Override
@@ -116,7 +218,7 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
             @Override
             public void onRefresh() {
                 //刷新操作
-                mPresenter.getMainPagers(true);
+                mPresenter.loadRefreshData();
             }
         });
         //设置是否刷新
@@ -127,13 +229,13 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
             @Override
             public void onClick(View v) {
                 mRefreshView.showProgress();
-                mPresenter.getMainPagers(true);
+                mPresenter.loadRefreshData();
             }
         });
         mAdapter.setMore(R.layout.view_more, new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPresenter.getMainPagers(false);
+                mPresenter.loadMoreData();
             }
         });
         mAdapter.setNoMore(R.layout.view_custom_empty_data, new OnNoMoreListener() {
@@ -144,7 +246,7 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
 
             @Override
             public void onNoMoreClick() {
-                Log.e("逗比","没有更多数据了");
+                Log.e("逗比", "没有更多数据了");
             }
         });
         mAdapter.setError(R.layout.view_error, new OnErrorListener() {

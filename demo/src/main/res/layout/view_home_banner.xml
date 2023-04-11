@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.yc.cn.ycbannerlib.banner.BannerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:hint_color="@color/colorAccent"
+        app:hint_gravity="center"
+        app:hint_mode="point"
+        app:play_delay="2000"
+        tools:ignore="MissingConstraints" />
+</LinearLayout>
