@@ -78,14 +78,16 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
     private HashMap<String, Object> createResponseMap(
             BaseResponse<List<BannerData>> bannerResponse,
             BaseResponse<FeedArticleListData> feedArticleListResponse) {
-        HashMap<String, Object> map = new HashMap<>(3);
+        HashMap<String, Object> map = new HashMap<>();
 //        map.put(Constants.LOGIN_DATA, loginResponse);
         map.put(Constants.BANNER_DATA, bannerResponse);
         map.put(Constants.ARTICLE_DATA, feedArticleListResponse);
         return map;
     }
 
-
+    /**
+     * 下拉刷新数据
+     */
     public void loadRefreshData() {
         Observable<BaseResponse<List<BannerData>>> mBannerObservable = mModel.getBannerData();
         Observable<BaseResponse<FeedArticleListData>> mArticleObservable = mModel.getFeedArticleList(page = 0);
@@ -116,7 +118,9 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
                 }));
     }
 
-    @SuppressLint("CheckResult")
+    /**
+     * 加载更多
+     */
     public void loadMoreData() {
         mModel.getFeedArticleList(page)
                 .doOnSubscribe(disposable -> {
@@ -142,6 +146,12 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
                 });
     }
 
+    /**
+     * 更新列表数据
+     *
+     * @param result
+     * @param pullToRefresh
+     */
     private void setAdapterData(FeedArticleListData result, boolean pullToRefresh) {
         if (pullToRefresh) {
             mAdapter.clear();
