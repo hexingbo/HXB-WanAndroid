@@ -8,9 +8,15 @@ import com.jess.arms.mvp.BaseModel;
 
 import com.jess.arms.di.scope.FragmentScope;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import me.hxbmvp.wanandroid.demo.mvp.contract.KnowledgeHierarchyContract;
+import me.hxbmvp.wanandroid.demo.mvp.model.api.service.CommonService;
+import me.hxbmvp.wanandroid.demo.mvp.model.entity.BaseResponse;
+import me.hxbmvp.wanandroid.demo.mvp.model.entity.KnowledgeHierarchyData;
 
 
 /**
@@ -35,5 +41,10 @@ public class KnowledgeHierarchyModel extends BaseModel implements KnowledgeHiera
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseResponse<List<KnowledgeHierarchyData>>> getKnowledgeHierarchyData() {
+        return mRepositoryManager.obtainRetrofitService(CommonService.class).getKnowledgeHierarchyData();
     }
 }

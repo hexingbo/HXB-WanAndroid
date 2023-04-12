@@ -21,6 +21,7 @@ import io.reactivex.Observable;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.BannerData;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.BaseResponse;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.FeedArticleListData;
+import me.hxbmvp.wanandroid.demo.mvp.model.entity.KnowledgeHierarchyData;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -32,7 +33,8 @@ import retrofit2.http.Path;
 public interface CommonService {
 
     /**
-     * 获取feed文章列表
+     * 获取feed文章列表数据
+     *
      * @param page
      * @return
      */
@@ -40,12 +42,17 @@ public interface CommonService {
     Observable<BaseResponse<FeedArticleListData>> getFeedArticleList(@Path("page") int page);
 
     /**
-     * 广告栏
+     * 广告栏数据
      * http://www.wanandroid.com/banner/json
-     *
-     * @return 广告栏数据
      */
     @GET("banner/json")
     Observable<BaseResponse<List<BannerData>>> getBannerData();
+
+    /**
+     * 知识体系列表数据
+     * https://www.wanandroid.com/tree/json
+     */
+    @GET("tree/json")
+    Observable<BaseResponse<List<KnowledgeHierarchyData>>> getKnowledgeHierarchyData();
 
 }

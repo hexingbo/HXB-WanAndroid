@@ -33,25 +33,25 @@ public abstract class MainPagerModule {
 
     @FragmentScope
     @Provides
-    static RecyclerView.LayoutManager provideLayoutManager(MainPagerContract.View view) {
-        return new LinearLayoutManager(view.getActivity());
-    }
-
-    @FragmentScope
-    @Provides
-    static List<FeedArticleData> mFeedArticleDatas() {
-        return new ArrayList<>();
-    }
-
-    @FragmentScope
-    @Provides
     static List<BannerData> mBannerDatas() {
         return new ArrayList<>();
     }
 
     @FragmentScope
     @Provides
-    static RecyclerArrayAdapter mFeedArticleAdapter(MainPagerContract.View view) {
+    static RecyclerView.LayoutManager provideLayoutManager(MainPagerContract.View view) {
+        return new LinearLayoutManager(view.getActivity());
+    }
+
+    @FragmentScope
+    @Provides
+    static List<FeedArticleData> mList() {
+        return new ArrayList<>();
+    }
+
+    @FragmentScope
+    @Provides
+    static RecyclerArrayAdapter mAdapter(MainPagerContract.View view) {
         return new FeedArticleAdapter(view.getActivity());
     }
 

@@ -163,9 +163,9 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
                 page++;
                 if (page > result.getPageCount()) {
                     if (!pullToRefresh) {
-                        mAdapter.pauseMore();
+                        mAdapter.stopMore();
                     }
-                    mRootView.showRecycler();
+//                    mRootView.showRecycler();
                 }
             }
         }

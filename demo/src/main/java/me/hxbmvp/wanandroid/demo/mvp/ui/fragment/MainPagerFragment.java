@@ -88,8 +88,6 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
         mAppComponent = ArmsUtils.obtainAppComponentFromContext(getContext());
         initBanner();
         initRefreshView();
-        mPresenter.loadRefreshData();
-
     }
 
     @Override
@@ -238,10 +236,10 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
                 mPresenter.loadMoreData();
             }
         });
-        mAdapter.setNoMore(R.layout.view_custom_empty_data, new OnNoMoreListener() {
+        mAdapter.setNoMore(R.layout.view_nomore, new OnNoMoreListener() {
             @Override
             public void onNoMoreShow() {
-                mAdapter.pauseMore();
+
             }
 
             @Override
@@ -252,7 +250,6 @@ public class MainPagerFragment extends BaseLazyLoadFragment<MainPagerPresenter> 
         mAdapter.setError(R.layout.view_error, new OnErrorListener() {
             @Override
             public void onErrorShow() {
-                mAdapter.pauseMore();
             }
 
             @Override

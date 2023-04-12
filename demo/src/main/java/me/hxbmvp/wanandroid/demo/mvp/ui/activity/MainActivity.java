@@ -238,16 +238,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             mBottomNavigationView.setVisibility(View.VISIBLE);
         }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        BaseFragment targetFg = mFragments.get(position);
-        BaseFragment lastFg = mFragments.get(mLastFgIndex);
+        BaseLazyLoadFragment targetFg = mFragments.get(position);
+        BaseLazyLoadFragment lastFg = mFragments.get(mLastFgIndex);
         mLastFgIndex = position;
         if (lastFg != null) {
             ft.hide(lastFg);
+            lastFg.setUserVisibleHint(false);
         }
         if (!targetFg.isAdded()) {
             getSupportFragmentManager().beginTransaction().remove(targetFg).commitAllowingStateLoss();
             ft.add(R.id.fragment_group, targetFg);
         }
+        targetFg.setUserVisibleHint(true);
+        targetFg.tryLoadData();
         ft.show(targetFg);
         ft.commitAllowingStateLoss();
     }
