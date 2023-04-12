@@ -28,6 +28,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import me.hxbmvp.wanandroid.demo.app.exception.OtherException;
 import me.hxbmvp.wanandroid.demo.mvp.model.entity.BaseResponse;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 /**
  * @作者： HeXingBo
@@ -42,6 +43,7 @@ public class RxUtils {
 
     /**
      * 统一线程处理
+     *
      * @param <T> 指定的泛型类型
      * @return FlowableTransformer
      */
@@ -52,23 +54,39 @@ public class RxUtils {
 
     /**
      * 统一线程处理
+     *
      * @param <T> 指定的泛型类型
      * @return ObservableTransformer
      */
     public static <T> ObservableTransformer<T, T> rxSchedulerHelper() {
+        return observable -> observable.subscribeOn(Schedulers.io())//订阅
+                .subscribeOn(AndroidSchedulers.mainThread())//订阅
+                .observeOn(AndroidSchedulers.mainThread());//观察
+    }
+
+    /**
+     * 统一线程处理
+     *
+     * @param <T> 指定的泛型类型
+     * @return ObservableTransformer
+     */
+    public static <T> ObservableTransformer<T, T> rxSchedulerHelperNet() {
         return observable -> observable.subscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .retryWhen(new RetryWithDelay(0, 0))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
      * 统一返回结果处理
+     *
      * @param <T> 指定的泛型类型
      * @return ObservableTransformer
      */
     public static <T> ObservableTransformer<BaseResponse<T>, T> handleResult() {
         return httpResponseObservable ->
                 httpResponseObservable.flatMap((Function<BaseResponse<T>, Observable<T>>) baseResponse -> {
-                    if(baseResponse.isSuccess()
+                    if (baseResponse.isSuccess()
                             && baseResponse.getData() != null
 //                            && CommonUtils.isNetworkConnected()
                     ) {
@@ -78,6 +96,7 @@ public class RxUtils {
                     }
                 });
     }
+
     public static <T> ObservableTransformer<T, T> applySchedulers(final IView view) {
         return observable -> observable.subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> {
@@ -106,6 +125,7 @@ public class RxUtils {
 
     /**
      * 得到 Observable
+     *
      * @param <T> 指定的泛型类型
      * @return Observable
      */
@@ -124,7 +144,7 @@ public class RxUtils {
      * 泛型转换工具方法 eg:object ==> map<String, String>
      *
      * @param object Object
-     * @param <T> 转换得到的泛型对象
+     * @param <T>    转换得到的泛型对象
      * @return T
      */
     @SuppressWarnings("unchecked")

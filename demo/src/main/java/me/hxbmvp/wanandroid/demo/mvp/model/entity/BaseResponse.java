@@ -26,14 +26,14 @@ import me.hxbmvp.wanandroid.demo.mvp.model.api.Api;
  */
 public class BaseResponse<T> extends BaseData {
     private T data;
-    private String errorCode;
+    private int errorCode;
     private String errorMsg;
 
     public T getData() {
         return data;
     }
 
-    public String getCode() {
+    public int getCode() {
         return errorCode;
     }
 
@@ -47,6 +47,6 @@ public class BaseResponse<T> extends BaseData {
      * @return
      */
     public boolean isSuccess() {
-        return errorCode.equals(Api.REQUEST_SUCCESS);
+        return errorCode==Api.REQUEST_SUCCESS;
     }
 }

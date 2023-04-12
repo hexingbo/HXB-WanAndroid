@@ -1,5 +1,6 @@
 package me.hxbmvp.wanandroid.demo.mvp.presenter;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -93,7 +94,6 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
                 .subscribeWith(new BaseObserver<HashMap<String, Object>>(mRootView) {
                     @Override
                     public void onNext(HashMap<String, Object> map) {
-
                         BaseResponse<List<BannerData>> bannerResponse = RxUtils.cast(map.get(Constants.BANNER_DATA));
                         if (bannerResponse != null) {
                             mBannerDatas.clear();
@@ -116,18 +116,16 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.Model, M
                 }));
     }
 
+    @SuppressLint("CheckResult")
     public void loadMoreData() {
         mModel.getFeedArticleList(page)
-                .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(0, 0))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe(disposable -> {
 
                 })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
 
                 })
+                .compose(RxUtils.rxSchedulerHelperNet())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new GlobalBaseObserver<FeedArticleListData>(mErrorHandler) {
 

@@ -22,5 +22,5 @@ package me.hxbmvp.wanandroid.demo.mvp.model.api;
  */
 public interface Api {
     String APP_DOMAIN = "https://api.github.com";
-    String REQUEST_SUCCESS = "0";
+    int REQUEST_SUCCESS = 0;
 }
